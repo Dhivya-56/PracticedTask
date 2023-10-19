@@ -11,11 +11,11 @@ import {
 
 import Card from "@mui/material/Card";
 import { useNavigate } from "react-router-dom";
-import CircularProgress from '@mui/material/CircularProgress';
 
-function Home1() {
+function Home2() {
   const [data, setData] = useState([]);
-const[loading,setLoading]=useState(false)
+ 
+
   const [selectedData, setSelectedData] = useState(() => {
     const storeItem = localStorage.getItem("cartData");
     return storeItem ? JSON.parse(storeItem) : [];
@@ -23,12 +23,10 @@ const[loading,setLoading]=useState(false)
   const navigate = useNavigate();
 
   function fetchData() {
-    setLoading(true);
     axios
       .get("https://api.jikan.moe/v4/anime")
       .then((res) => {
         const responseData = res.data;
-        setLoading(false)
         setData(responseData.data);
       })
       .catch((err) => console.log(err));
@@ -37,9 +35,8 @@ const[loading,setLoading]=useState(false)
   useEffect(() => {
     fetchData();
   }, []);
-
+ 
   function AddCart(ele) {
-
     const updatedData = [...selectedData, ele];
     setSelectedData(updatedData);
     localStorage.setItem("cartData", JSON.stringify(updatedData));
@@ -54,8 +51,12 @@ const[loading,setLoading]=useState(false)
     navigate(`/details/${id}`);
   }
 
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
   return (
+    <Box>
     <Box
       sx={{
         display: "flex",
@@ -64,6 +65,7 @@ const[loading,setLoading]=useState(false)
         alignItems: "center",
       }}
     >
+        
       {data.length > 0 && (
         <Box
           sx={{
@@ -72,9 +74,9 @@ const[loading,setLoading]=useState(false)
             gap: "14px",
           }}
         >
-          {data.map((item) => (
+          {data.map((ele, index) => (
             <Card
-              key={item.mal_id}
+              key={ele.mal_id}
               sx={{
                 maxWidth: 350,
               }}
@@ -88,15 +90,15 @@ const[loading,setLoading]=useState(false)
                   <CardMedia
                     component="img"
                     height="320"
-                    image={item.images?.jpg?.image_url}
+                    image={ele.images?.jpg?.image_url}
                     alt="image"
                   />
                   <CardContent>
-                    <Typography component="h5">Name: {item.title}</Typography>
-                    <Typography component="h5">Rating: {item.rating}</Typography>
-                    <Typography component="h5">Status: {item.status}</Typography>
-                    <Typography component="h5">Score: {item.score}</Typography>
-                    <Typography component="h5">Source: {item.source}</Typography>
+                    <Typography component="h5">Name: {ele.title}</Typography>
+                    <Typography component="h5">Rating: {ele.rating}</Typography>
+                    <Typography component="h5">Status: {ele.status}</Typography>
+                    <Typography component="h5">Score: {ele.score}</Typography>
+                    <Typography component="h5">Source: {ele.source}</Typography>
                   </CardContent>
                   <Box
                     sx={{
@@ -104,16 +106,16 @@ const[loading,setLoading]=useState(false)
                       justifyContent: "space-evenly",
                     }}
                   >
-                    {isItemInCart(item) ? (
+                    {isItemInCart(ele) ? (
                       <Button variant="outlined" disabled>
                         Added
                       </Button>
                     ) : (
-                      <Button variant="contained" onClick={() => AddCart(item)}>
+                      <Button variant="contained" onClick={() => AddCart(ele)}>
                         Add To Cart
                       </Button>
                     )}
-                    <Button onClick={() => handleDetails(item.mal_id)}>
+                    <Button onClick={() => handleDetails(ele.mal_id)}>
                       More Details
                     </Button>
                   </Box>
@@ -122,10 +124,11 @@ const[loading,setLoading]=useState(false)
             </Card>
           ))}
         </Box>
-      )}:<CircularProgress/>;
+      )}
+    </Box>
     </Box>
   );
 }
 
-export default Home1;
+export default Home2;
 

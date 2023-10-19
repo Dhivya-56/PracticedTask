@@ -11,7 +11,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
-import { Dialog, DialogTitle, Button ,Stack} from "@mui/material";
+import { Dialog, DialogTitle, Button ,Stack, Badge} from "@mui/material";
+
 import Home1 from "./Home1";
 import Profile from "./Profile";
 import Cart from "./Cart";
@@ -22,11 +23,14 @@ import { useNavigate } from "react-router-dom";
 import { info } from "../WebReducers";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 const drawerWidth = 240;
 
 const Dash = () => {
     const selector = useSelector(state => state.Anime.value)
+    console.log(selector)
     const [selectedIndex, setSelectedIndex] = React.useState(0);
+  
     const [profileOpen, setProfileOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const dispatch = useDispatch();
@@ -42,7 +46,8 @@ const Dash = () => {
     const handleProfileClose = () => {
         setProfileOpen(false);
     };
-
+    const cartProducts = JSON.parse(localStorage.getItem("cartData"));
+    console.log(cartProducts)
     const handleLogout = () => {
         navigate('/')
 
@@ -63,30 +68,34 @@ const Dash = () => {
 
         navigate('profile');
     }
-    console.log(selectedIndex)
-
+ 
+    
     return (
         <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
+          
+           
+      <CssBaseline />
             <AppBar
                 position="fixed"
                 sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
             >
                 <Toolbar>
+                
                     <Typography
                         variant="h6"
                         noWrap
                         component="div"
                         sx={{ display: "flex", height: "fitContent" }}
                     >
-                        <Box component="img" src="logo.jpeg" sx={{height:50, width:70}}>
+                        <Box component="img" src="/logo.jpeg" sx={{height:50, width:70}}>
                         
                         </Box>
+                            
                         <Box  sx={{ position: "relative", float: "right", marginLeft: 100 }}> <Tooltip title="Your profile" arrow>
                           <Stack spacing={2} direction="row">
                             <Typography sx={{fontFamily:'Jokerman',fontSize:25,fontWeight:1400}}>{selector.fname}</Typography>
-                            <Avatar sx={{ width: 32, height: 32 }} onClick={handleClick}>
-                            {selector.fname.charAt(0)}
+                            <Avatar sx={{ width: 32, height: 32 ,position:"relative",top:5}} onClick={handleClick}>
+                           <MoreVertIcon/>
                             </Avatar>
                             </Stack>
 
@@ -137,6 +146,7 @@ const Dash = () => {
 
 
                         </Box>
+                       
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -181,7 +191,9 @@ const Dash = () => {
                             component={Link}
                             to="/cart"
                         >
+                            <Badge badgeContent={cartProducts.length} color="primary" sx={{position:"relative",left:2}}>
                             <ListItemText primary="Cart" />
+                            </Badge>
                         </ListItemButton>
                     </ListItem>
                 </List>

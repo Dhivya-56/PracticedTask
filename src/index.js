@@ -7,14 +7,17 @@ import { Provider } from 'react-redux';
 import Website from './Website';
 import { persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
-import { store } from './store';
+// import { store } from './store';
+import { store } from './store1';
+import Task from './Task';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
  
   <React.StrictMode>
   <Provider store={store}>
   <PersistGate loading={null} persistor={persistor}>
-  <Website/>
+  {/* <Website/> */}
+  <Task/>
       </PersistGate>
   
     </Provider>
