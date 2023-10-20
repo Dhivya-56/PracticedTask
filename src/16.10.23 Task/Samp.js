@@ -11,18 +11,20 @@ import {
   Button,
   Checkbox,
 } from "@mui/material";
-import { Key } from "@mui/icons-material";
+
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Data from "./Data";
 import { info } from "../TaskReducer";
-function IPTable({checkbox, step,setStep,nextFun}) {
+function IPTable({ checkbox, step,nextFun }) {
   const selector = useSelector((state) => state.Task);
 
   const [ipData, setIpData] = useState(selector);
   const [ipDat, setIpDat] = useState(Data);
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    dispatch(info(ipData));
+  }, [ipData, dispatch]);
   const handleCheckboxChange = (ip, heading) => {
     setIpData((prevData) => {
       return prevData.map((item) => {
@@ -40,72 +42,98 @@ function IPTable({checkbox, step,setStep,nextFun}) {
           }
 
           Object.keys(newExchange).forEach((key) => {
-            if (newExchange[key] === 0) {
+            console.log(newExchange)
+            if (!newExchange[key]) {
               delete newExchange[key];
             }
           });
 
-          return { ...item, exchange: newExchange };
+          return {
+            ...item,
+       
+            exchange: newExchange,
+            meta: {
+              web_log: {
+                auth_error: {},
+                trade_error: {},
+              },
+              oms_log: {
+                auth_error: {},
+                trade_error: {},
+              },
+              rms_log: {
+                auth_error: {},
+                trade_error: {},
+              },
+              db_log:{
+                password:'',
+                port:'',
+                host:'',
+                username:'',
+                type:'',
+                instance_type:'',
+              },
+              ex_adptr_log: {
+                auth_error: {},
+                trade_error: {},
+              },
+            },
+          };
         }
         return item;
       });
     });
-
-    dispatch(info(ipData));
   };
-
-  console.log(ipData);
-  console.log(ipDat);
-
+console.log(selector)
   return (
     <Box>
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Private Ip</TableCell>
-            <TableCell>NSE</TableCell>
-            <TableCell>BSE</TableCell>
-            <TableCell>MCX</TableCell>
-            <TableCell>NCDEX</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {ipDat.map((item) => (
-            <TableRow key={item.ip}>
-              <TableCell>{item.ip}</TableCell>
-              {["NSE", "BSE", "MCX", "NCDEX"].map((heading) => (
-                <TableCell key={heading}>
-                  <Checkbox
-                    defaultChecked={selector.some(
-                      (val) => val.ip === item.ip && val.exchange?.[heading]
-                    )}
-                    onChange={() => handleCheckboxChange(item.ip, heading)}
-                  />
-                </TableCell>
-              ))}
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Private Ip</TableCell>
+              <TableCell>NSE</TableCell>
+              <TableCell>BSE</TableCell>
+              <TableCell>MCX</TableCell>
+              <TableCell>NCDEX</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-     <React.Fragment>
-     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-       <Button
-         color="inherit"
-         disabled={step === 0}
-        //  onClick={handleBack}
-         sx={{ mr: 1 }}
-       >
-         Back
-       </Button>
-       <Box sx={{ flex: "1 1 auto" }} />
-       <Button onClick={nextFun} sx={{ mr: 1 }} disabled={!checkbox}>
-         Next
-       </Button>
-     </Box>
-   </React.Fragment>
-   </Box>
+          </TableHead>
+          <TableBody>
+            {ipDat.map((item) => (
+              <TableRow key={item.ip}>
+                <TableCell>{item.ip}</TableCell>
+                {["NSE", "BSE", "MCX", "NCDEX"].map((heading) => (
+                  <TableCell key={heading}>
+                    <Checkbox
+                      defaultChecked={selector.some(
+                        (val) => val.ip === item.ip && val.exchange?.[heading]
+                      )}
+                      onChange={() => handleCheckboxChange(item.ip, heading)}
+                    />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <React.Fragment>
+        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+          <Button
+            color="inherit"
+            disabled={step === 0}
+            //  onClick={handleBack}
+            sx={{ mr: 1 }}
+          >
+            Back
+          </Button>
+          <Box sx={{ flex: "1 1 auto" }} />
+          <Button onClick={nextFun} sx={{ mr: 1 }} disabled={!checkbox}>
+            Next
+          </Button>
+        </Box>
+      </React.Fragment>
+    </Box>
   );
 }
 

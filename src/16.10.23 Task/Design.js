@@ -6,18 +6,19 @@ import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 
 import { useSelector } from "react-redux";
-import Tab from "./Tab";
+
 import IPTable from "./Samp";
 import Samp2 from "./Samp2";
 import Samp3 from "./Samp3";
 import Samp4 from "./Samp4";
-const STEPS = ["Setup Exchange", "Setup Application", "Web", "Servers"];
+import Samp5 from "./Samp5";
+const STEPS = ["Setup Exchange", "Setup Application", "Web","Oms","Rms","Exc","Database" ,"Servers"];
 
 const Design = () => {
   const selector = useSelector((state) => state.Task);
-  console.log(selector);
+
   const [activeStep, setActiveStep] = useState(0);
-  const [butn, setButn] = useState(true);
+
   const Checkbox = selector.some(
     (item) =>
       item.exchange &&
@@ -58,28 +59,95 @@ const Design = () => {
       </Stepper>
       {activeStep === 0 && (
         <Box>
-          <IPTable checkbox={Checkbox} step={activeStep}  setStep={setActiveStep} nextFun={handleNext}/>
+          <IPTable
+            checkbox={Checkbox}
+            step={activeStep}
+            setStep={setActiveStep}
+            nextFun={handleNext}
+          />
         </Box>
       )}
       {activeStep === 1 && (
         <Box>
-          <Samp2 checkbox={Checkbox} step={activeStep}  setStep={setActiveStep} nextFun={handleNext} backFun={handleBack}/>
+          <Samp2
+            checkbox={Checkbox}
+            step={activeStep}
+            setStep={setActiveStep}
+            nextFun={handleNext}
+            backFun={handleBack}
+          />
         </Box>
       )}
       {activeStep === 2 && (
         <Box>
-          <Samp4 checkbox={Checkbox} step={activeStep}  setStep={setActiveStep} nextFun={handleNext} backFun={handleBack}/>
+          <Samp4
+            checkbox={Checkbox}
+            step={activeStep}
+            setStep={setActiveStep}
+            nextFun={handleNext}
+            backFun={handleBack}
+            data={"WEB"}
+          />
         </Box>
       )}
       {activeStep === 3 && (
         <Box>
-          <Samp3 checkbox={Checkbox} step={activeStep}  setStep={setActiveStep} nextFun={handleNext} backFun={handleBack} />
+          <Samp4
+            checkbox={Checkbox}
+            step={activeStep}
+            setStep={setActiveStep}
+            nextFun={handleNext}
+            backFun={handleBack}
+            data={"OMS"}
+          />
+        </Box>
+      )}
+      {activeStep === 4 && (
+        <Box>
+          <Samp4
+            checkbox={Checkbox}
+            step={activeStep}
+            setStep={setActiveStep}
+            nextFun={handleNext}
+            backFun={handleBack}
+            data={"RMS"}
+          />
+        </Box>
+      )}
+      {activeStep === 5 && (
+        <Box>
+          <Samp4
+            checkbox={Checkbox}
+            step={activeStep}
+            setStep={setActiveStep}
+            nextFun={handleNext}
+            backFun={handleBack}
+            data={"EXC"}
+          />
+        </Box>
+      )}
+        {activeStep === 6 && (
+        <Box>
+         <Samp5
+          step={activeStep}
+          setStep={setActiveStep}
+          nextFun={handleNext}
+          backFun={handleBack}/>
+        </Box>
+      )}
+      {activeStep === 7 && (
+        <Box>
+          <Samp3
+            checkbox={Checkbox}
+            step={activeStep}
+            setStep={setActiveStep}
+            nextFun={handleNext}
+            backFun={handleBack}
+          />
         </Box>
       )}
 
-      <div>
-       
-      </div>
+      <div></div>
     </Box>
   );
 };
