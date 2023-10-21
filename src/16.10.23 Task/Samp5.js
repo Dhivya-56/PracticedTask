@@ -14,45 +14,44 @@ import { useEffect } from "react";
 const Samp5 = ({ step, nextFun, backFun, setStep }) => {
   const selector = useSelector((state) => state.Task);
   const [db, setDb] = useState(selector);
-const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const Dbfilter = db?.filter((values) => values?.selected_metrics?.DB);
   const [dbpage, setDbpage] = useState(Dbfilter);
-  useEffect(()=>{
-dispatch(info(db))
-  },[db,dispatch])
-  function handleChange(ip, field,value) {
-    console.log(field,value)
+
+  function handleChange(ip, field, value) {
     setDb((data) => {
-     return data.map((item)=>{
-        if(item.ip===ip){
-            return {
-                ...item,
-                meta: {
-                    web_log: {
-                      auth_error: {},
-                      trade_error: {},
-                    },
-                    oms_log: {
-                      auth_error: {},
-                      trade_error: {},
-                    },
-                    rms_log: {
-                      auth_error: {},
-                      trade_error: {},
-                    },
-                    db_log:{
-                        ...item?.meta?.db_log,
-                        [field]:value
-              }
-            }
+      return data.map((item) => {
+        if (item.ip === ip) {
+          return {
+            ...item,
+            meta: {
+              web_log: {
+                auth_error: {},
+                trade_error: {},
+              },
+              oms_log: {
+                auth_error: {},
+                trade_error: {},
+              },
+              rms_log: {
+                auth_error: {},
+                trade_error: {},
+              },
+              db_log: {
+                ...item?.meta?.db_log,
+                [field]: value,
+              },
+            },
+          };
         }
-    }
         return item;
-})
+      });
     });
   }
-  console.log(db)
-  console.log(selector)
+  useEffect(() => {
+    dispatch(info(db));
+  }, [db, dispatch]);
+
   return (
     <Box>
       {dbpage.map((web) => (
@@ -63,15 +62,23 @@ dispatch(info(db))
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              position: "relative",
+              top: 20,
             }}
           >
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              label="Age"
+              label="instance-type"
               name="instance_type"
+              sx={{ width: 225, position: "relative", left: 15 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
               defaultValue={web.meta.db_log.instance_type}
-              onChange={(e) => handleChange(web.ip, "instance_type",e.target.value)}
+              onChange={(e) =>
+                handleChange(web.ip, "instance_type", e.target.value)
+              }
             >
               <MenuItem value={"Web"}>Web</MenuItem>
               <MenuItem value={"Rms"}>Rms</MenuItem>
@@ -81,16 +88,20 @@ dispatch(info(db))
             <TextField
               label="Database Name"
               name="username"
+              InputLabelProps={{
+                shrink: true,
+              }}
               sx={{ m: 2 }}
               defaultValue={web.meta.db_log.username}
-              onChange={(e) =>
-                handleChange(web.ip, "username", e.target.value)
-              }
+              onChange={(e) => handleChange(web.ip, "username", e.target.value)}
             ></TextField>
             <TextField
               label="Database Query"
               sx={{ m: 2 }}
               name="port"
+              InputLabelProps={{
+                shrink: true,
+              }}
               defaultValue={web.meta.db_log.port}
               onChange={(e) => handleChange(web.ip, "port", e.target.value)}
             ></TextField>
@@ -105,13 +116,20 @@ dispatch(info(db))
             <TextField
               label="Database Query"
               sx={{ m: 2 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
               name="host"
+              value={web.ip}
               defaultValue={web.meta.db_log.host}
               onChange={(e) => handleChange(web.ip, "host", e.target.value)}
             ></TextField>
             <TextField
               label="Database Query"
               sx={{ m: 2 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
               name="password"
               defaultValue={web.meta.db_log.password}
               onChange={(e) => handleChange(web.ip, "password", e.target.value)}
@@ -121,6 +139,10 @@ dispatch(info(db))
               id="demo-simple-select"
               label="Select"
               name="type"
+              sx={{ width: 225, position: "relative", left: 15 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
               defaultValue={web.meta.db_log.type}
               onChange={(e) => handleChange(web.ip, "type", e.target.value)}
             >
@@ -132,7 +154,7 @@ dispatch(info(db))
       <React.Fragment>
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
           <Button
-            color="inherit"
+            color="primary"
             disabled={step === 0}
             onClick={backFun}
             sx={{ mr: 1 }}
@@ -140,7 +162,7 @@ dispatch(info(db))
             Back
           </Button>
           <Box sx={{ flex: "1 1 auto" }} />
-          <Button onClick={nextFun} sx={{ mr: 1 }}>
+          <Button variant="contained" onClick={nextFun} sx={{ mr: 1 }}>
             Next
           </Button>
         </Box>

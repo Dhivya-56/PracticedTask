@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { info } from "../TaskReducer";
 const Samp4 = ({ step, nextFun, backFun, data }) => {
- 
   const selector = useSelector((state) => state.Task);
 
   const [final, setFinal] = useState(selector);
@@ -13,29 +12,24 @@ const Samp4 = ({ step, nextFun, backFun, data }) => {
   const Web = final.filter((values) => values.selected_metrics?.[data]);
 
   const [ipWeb, setIpWeb] = useState(Web);
-  useEffect(() => {
-    dispatch(info(final));
-  }, [final, dispatch]);
 
-  function checkData(data){
-    switch(data){
-      case 'WEB':
-        return "web_log"
-        case "OMS":
-          return "oms_log"
-          case "RMS":
-            return "rms_log"
-            case "EXC":
-              return "ex_adptr_log"
-            default:
-              return null
+  function checkData(data) {
+    switch (data) {
+      case "WEB":
+        return "web_log";
+      case "OMS":
+        return "oms_log";
+      case "RMS":
+        return "rms_log";
+      case "EXC":
+        return "ex_adptr_log";
+      default:
+        return null;
     }
-   }
-   const checkData1 = checkData(data)
-   
+  }
+  const checkData1 = checkData(data);
 
   function handleInputChange(ip, auth, field, value) {
-
     setFinal((prevDat) => {
       return prevDat.map((item) => {
         if (item.ip === ip) {
@@ -57,6 +51,9 @@ const Samp4 = ({ step, nextFun, backFun, data }) => {
       });
     });
   }
+  useEffect(() => {
+    dispatch(info(final));
+  }, [final, dispatch]);
 
   return (
     <Box>
@@ -141,7 +138,7 @@ const Samp4 = ({ step, nextFun, backFun, data }) => {
       <React.Fragment>
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
           <Button
-            color="inherit"
+            color="primary"
             disabled={step === 0}
             onClick={backFun}
             sx={{ mr: 1 }}
@@ -149,7 +146,7 @@ const Samp4 = ({ step, nextFun, backFun, data }) => {
             Back
           </Button>
           <Box sx={{ flex: "1 1 auto" }} />
-          <Button onClick={nextFun} sx={{ mr: 1 }}>
+          <Button variant="contained" onClick={nextFun} sx={{ mr: 1 }}>
             Next
           </Button>
         </Box>
