@@ -22,10 +22,9 @@ function IPTable({ checkbox, step, nextFun }) {
 
   const [ipData, setIpData] = useState(selector);
   const [ipDat, setIpDat] = useState(Data);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const dispatch = useDispatch();
-
   const handleCheckboxChange = (ip, heading) => {
     setIpData((prevData) => {
       return prevData.map((item) => {
@@ -42,17 +41,11 @@ function IPTable({ checkbox, step, nextFun }) {
             newExchange[heading] = newExchange[heading] === 4 ? 0 : 4;
           }
 
-          if (!Object.keys(newExchange).length) {
-            console.log("dkjds");
-            delete item.exchange;
-          } else {
-            Object.keys(newExchange).forEach((key) => {
-              if (newExchange[key] === 0) {
-                delete newExchange[key];
-              }
-            });
-            //   item.exchange = newExchange;
-          }
+          Object.keys(newExchange).forEach((key) => {
+            if (newExchange[key] === 0) {
+              delete newExchange[key];
+            }
+          });
 
           return {
             ...item,
@@ -90,10 +83,10 @@ function IPTable({ checkbox, step, nextFun }) {
       });
     });
   };
-  console.log(selector);
+
   useEffect(() => {
     dispatch(info(ipData));
-  }, [ipData, dispatch]);
+  }, [ipData]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -104,23 +97,23 @@ function IPTable({ checkbox, step, nextFun }) {
   };
   return (
     <Box sx={{ position: "relative", bottom: 15 }}>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead sx={{ height: 10 }}>
             <TableRow sx={{ backgroundColor: "#e1f5fe" }}>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
-                Private Ip
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
+                Private IP
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 NSE
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 BSE
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 MCX
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 NCDEX
               </TableCell>
             </TableRow>
@@ -139,7 +132,7 @@ function IPTable({ checkbox, step, nextFun }) {
                 >
                   <TableCell>{item.ip}</TableCell>
                   {["NSE", "BSE", "MCX", "NCDEX"].map((heading) => (
-                    <TableCell key={heading}>
+                    <TableCell key={heading} sx={{ p: 1 }}>
                       <Checkbox
                         defaultChecked={selector.some(
                           (val) => val.ip === item.ip && val.exchange?.[heading]
@@ -163,14 +156,7 @@ function IPTable({ checkbox, step, nextFun }) {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <React.Fragment>
-        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-          <Button
-            color="primary"
-            disabled={step === 0}
-            sx={{ fontWeight: 800, mr: 1 }}
-          >
-            Back
-          </Button>
+        <Box sx={{ float: "right", pt: 2 }}>
           <Box sx={{ flex: "1 1 auto" }} />
           <Button
             variant="contained"

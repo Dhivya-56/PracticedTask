@@ -8,7 +8,7 @@ export const TaskSlice = createSlice({
   initialState,
   reducers: {
     info: (state, action) => {
-     
+    
       return action.payload;
     },
   },

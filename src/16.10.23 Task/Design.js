@@ -16,11 +16,11 @@ import Samp5 from "./Samp5";
 const STEPS = [
   "Setup Exchange",
   "Setup Application",
-  "Web servers",
-  "Oms servers",
-  "Rms servers",
+  "WEB Servers",
+  "OMS Servers",
+  "RMS Servers",
   "Exchange Connectivity",
-  "Database servers",
+  "Database Servers",
   "Summary",
 ];
 
@@ -28,6 +28,9 @@ const Design = () => {
   const selector = useSelector((state) => state.Task);
 
   const [activeStep, setActiveStep] = useState(0);
+  const filter = selector.filter(
+    (item) => Object.keys(item?.exchange || {}).length > 0
+  );
 
   const Checkbox = selector.some(
     (item) =>
@@ -48,7 +51,7 @@ const Design = () => {
   };
 
   return (
-    <Box sx={{ width: 800, m: "auto", position: "relative", top: 10 }}>
+    <Box sx={{ width: 1000, m: "auto", position: "relative", top: 10 }}>
       <Stepper
         activeStep={activeStep}
         alternativeLabel
@@ -90,6 +93,7 @@ const Design = () => {
               setStep={setActiveStep}
               nextFun={handleNext}
               backFun={handleBack}
+              filteredData={filter}
             />
           </Box>
         )}

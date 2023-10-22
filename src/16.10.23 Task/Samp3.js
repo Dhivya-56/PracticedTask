@@ -22,7 +22,7 @@ const Samp3 = ({ step, nextFun, backFun }) => {
   const dispatch = useDispatch();
   const [lastSelector, setLastSelector] = useState(selector);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const select = selector.filter((item) => item.selected_metrics);
   const [last, setLast] = useState(select);
   useEffect(() => {
@@ -39,113 +39,36 @@ const Samp3 = ({ step, nextFun, backFun }) => {
   };
 
   function handleSubmit() {
-    setLastSelector((prev) => {
-      return prev.map((item) => {
-        if (item.selected_metrics === "WEB") {
-          return item.selected
-            ? {
-                ...item,
-                meta: {
-                  web_log: {
-                    auth_error: {},
-                    trade_error: {},
-                  },
-                  oms_log: {},
-                  rms_log: {},
-                  ex_adptr_log: {},
-                  db_log: {},
-                },
-              }
-            : { ...item };
-        } else if (item.selected_metrics === "OMS") {
-          return item.selected
-            ? {
-                ...item,
-                meta: {
-                  oms_log: {
-                    auth_error: {},
-                    trade_error: {},
-                  },
-                  web_log: {},
-                  rms_log: {},
-                  ex_adptr_log: {},
-                  db_log: {},
-                },
-              }
-            : { ...item };
-        } else if (item.selected_metrics === "RMS") {
-          return item.selected
-            ? {
-                ...item,
-                meta: {
-                  rms_log: {
-                    auth_error: {},
-                    trade_error: {},
-                  },
-                  web_log: {},
-                  oms_log: {},
-                  ex_adptr_log: {},
-                  db_log: {},
-                },
-              }
-            : { ...item };
-        } else if (item.selected_metrics === "EXC") {
-          return item.selected
-            ? {
-                ...item,
-                meta: {
-                  ex_adptr_log: {
-                    auth_error: {},
-                    trade_error: {},
-                  },
-                  web_log: {},
-                  oms_log: {},
-                  rms_log: {},
-                  db_log: {},
-                },
-              }
-            : { ...item };
-        } else if (item.selected_metrics === "DB") {
-          return item.selected
-            ? {
-                ...item,
-                meta: {
-                  db_log: {
-                    password: "",
-                    port: "",
-                    host: "",
-                    username: "",
-                    type: "",
-                    instance_type: "",
-                  },
-                  web_log: {},
-                  oms_log: {},
-                  rms_log: {},
-                  ex_adptr_log: {},
-                },
-              }
-            : { ...item };
-        } else {
-          return item;
-        }
-      });
+    const newData = select.map((item) => {
+      const { selected_metrics, meta } = item;
+      return {
+        ...item,
+        meta: {
+          web_log: selected_metrics.WEB ? meta?.web_log : {},
+          oms_log: selected_metrics.OMS ? meta.oms_log : {},
+          rms_log: selected_metrics.RMS ? meta.rms_log : {},
+          db_log: selected_metrics.DB ? meta.db_log : {},
+          ex_adptr_log: selected_metrics.EXC ? meta.ex_adptr_log : {},
+        },
+      };
     });
+
+    setLastSelector(newData);
   }
-  console.log(selector);
 
   return (
     <Box>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table>
           <TableHead>
             <TableRow sx={{ backgroundColor: "#e1f5fe" }}>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 Private Ip
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 Exchange
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 Instance Type
               </TableCell>
             </TableRow>
@@ -163,19 +86,15 @@ const Samp3 = ({ step, nextFun, backFun }) => {
                   key={item.ip}
                 >
                   <TableCell>{item.ip}</TableCell>
-                  <TableCell>
-                    <div>
-                      {Object.keys(item.exchange).map((key) => (
-                        <p key={key}>{key}</p>
-                      ))}
-                    </div>
+                  <TableCell sx={{ p: 1 }}>
+                    {Object.keys(item.exchange).map((key) => (
+                      <p key={key}>{key}</p>
+                    ))}
                   </TableCell>
-                  <TableCell>
-                    <div>
-                      {Object.keys(item.selected_metrics).map((key) => (
-                        <p key={key}>{key}</p>
-                      ))}
-                    </div>
+                  <TableCell sx={{ p: 0 }}>
+                    {Object.keys(item.selected_metrics).map((key) => (
+                      <p key={key}>{key}</p>
+                    ))}
                   </TableCell>
                 </TableRow>
               ))}
@@ -192,20 +111,19 @@ const Samp3 = ({ step, nextFun, backFun }) => {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <React.Fragment>
-        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+        <Box sx={{ float: "right", pt: 2 }}>
           <Button
             color="primary"
             disabled={step === 0}
             onClick={backFun}
-            sx={{ fontWeight: 800, mr: 1 }}
+            sx={{ fontWeight: 700, mr: 1 }}
           >
             Back
           </Button>
 
-          <Box sx={{ flex: "1 1 auto" }} />
           {step === 7 && (
             <Button variant="contained" onClick={handleSubmit} sx={{ mr: 1 }}>
-              Submit
+              Save
             </Button>
           )}
         </Box>

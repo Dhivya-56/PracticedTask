@@ -14,18 +14,20 @@ import {
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { info } from "../TaskReducer";
+import { CheckBox } from "@mui/icons-material";
 
-const Samp2 = ({ step, nextFun, backFun }) => {
+const Samp2 = ({ step, nextFun, backFun, filteredData }) => {
   const selector = useSelector((state) => state.Task);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const dispatch = useDispatch();
-
-  const filteredData = selector.filter((item) => item.exchange);
-  // const filteredData = selector.filter((item) => Object.keys(item.exchange)?.length > 0);
-  // const [ipsecond, setIpSecond] = useState(selector);
+  const [dat, setDat] = useState(selector);
   const [ipTable, setIpTable] = useState(filteredData);
+
+  useEffect(() => {
+    setIpTable(filteredData);
+  }, [filteredData]);
   const checkbox = filteredData.every(
     (item) =>
       item.selected_metrics &&
@@ -41,7 +43,7 @@ const Samp2 = ({ step, nextFun, backFun }) => {
   };
 
   const handleCheckboxChange = (ip, head) => {
-    setIpTable((prevData) => {
+    setDat((prevData) => {
       return prevData.map((item) => {
         if (item.ip === ip) {
           const newExchange = item.selected_metrics
@@ -63,32 +65,34 @@ const Samp2 = ({ step, nextFun, backFun }) => {
     });
   };
   useEffect(() => {
-    dispatch(info(ipTable));
-  }, [ipTable, dispatch]);
+    dispatch(info(dat));
+  }, [dat]);
 
   return (
     <Box>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead sx={{ height: 10 }}>
             <TableRow sx={{ backgroundColor: "#e1f5fe" }}>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
-                Private Ip
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
+                Private IP
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 WEB
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 OMS
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 RMS
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
-                DB
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
+                Database
               </TableCell>
-              <TableCell sx={{ fontWeight: 800, color: "#2196f3" }}>
-                EXC
+              <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
+                Exchange
+                <br />
+                Connectivity
               </TableCell>
             </TableRow>
           </TableHead>
@@ -106,7 +110,7 @@ const Samp2 = ({ step, nextFun, backFun }) => {
                 >
                   <TableCell>{item.ip}</TableCell>
                   {["WEB", "OMS", "RMS", "DB", "EXC"].map((head) => (
-                    <TableCell key={head}>
+                    <TableCell key={head} sx={{ p: 1 }}>
                       <Checkbox
                         checked={
                           item.selected_metrics && item.selected_metrics[head]
@@ -130,16 +134,16 @@ const Samp2 = ({ step, nextFun, backFun }) => {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <React.Fragment>
-        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+        <Box sx={{ float: "right", pt: 2 }}>
           <Button
             color="primary"
             disabled={step === 0}
             onClick={backFun}
-            sx={{ fontWeight: 800, mr: 1 }}
+            sx={{ fontWeight: 700, mr: 1 }}
           >
             Back
           </Button>
-          <Box sx={{ flex: "1 1 auto" }} />
+
           <Button
             variant="contained"
             onClick={nextFun}
