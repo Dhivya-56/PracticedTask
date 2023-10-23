@@ -9,6 +9,8 @@ import {
   TextField,
   Select,
   MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import { useEffect } from "react";
 const Samp5 = ({ step, nextFun, backFun, setStep }) => {
@@ -85,27 +87,28 @@ const Samp5 = ({ step, nextFun, backFun, setStep }) => {
                   top: 20,
                 }}
               >
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="Application Type"
-                  name="instance_type"
-                  size="small"
-                  notched="true"
+                <FormControl
                   sx={{ width: 350, position: "relative", left: 15 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  defaultValue={web.meta.db_log.instance_type}
-                  onChange={(e) =>
-                    handleChange(web.ip, "instance_type", e.target.value)
-                  }
                 >
-                  <MenuItem value={"Web"}>Web</MenuItem>
-                  <MenuItem value={"Rms"}>Rms</MenuItem>
-                  <MenuItem value={"Oms"}>Oms</MenuItem>
-                  <MenuItem value={"Exchange"}>Exchange</MenuItem>
-                </Select>
+                  <InputLabel shrink={true}>Application Type</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Application     Type"
+                    notched="true"
+                    name="instance_type"
+                    size="small"
+                    defaultValue={web.meta.db_log.instance_type}
+                    onChange={(e) =>
+                      handleChange(web.ip, "instance_type", e.target.value)
+                    }
+                  >
+                    <MenuItem value={"Web"}>Web</MenuItem>
+                    <MenuItem value={"Rms"}>Rms</MenuItem>
+                    <MenuItem value={"Oms"}>Oms</MenuItem>
+                    <MenuItem value={"Exchange"}>Exchange</MenuItem>
+                  </Select>
+                </FormControl>
                 <TextField
                   label="Port"
                   name="username"
@@ -177,22 +180,25 @@ const Samp5 = ({ step, nextFun, backFun, setStep }) => {
                     handleChange(web.ip, "password", e.target.value)
                   }
                 ></TextField>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="DB Type"
-                  name="type"
-                  size="small"
-                  notched="true"
-                  sx={{ width: 350, position: "relative", left: -3, top: 3 }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  defaultValue={web.meta.db_log.type}
-                  onChange={(e) => handleChange(web.ip, "type", e.target.value)}
-                >
-                  <MenuItem value={"MySql"}>MySql</MenuItem>
-                </Select>
+                <FormControl>
+                  <InputLabel shrink={true}>DB Type</InputLabel>
+
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="DB Type"
+                    name="type"
+                    size="small"
+                    notched="true"
+                    sx={{ width: 350, position: "relative", left: -3, top: 3 }}
+                    defaultValue={web.meta.db_log.type}
+                    onChange={(e) =>
+                      handleChange(web.ip, "type", e.target.value)
+                    }
+                  >
+                    <MenuItem value={"MySql"}>MySql</MenuItem>
+                  </Select>
+                </FormControl>
               </Box>
             </Box>
           </Box>
