@@ -72,8 +72,8 @@ const Samp2 = ({ step, nextFun, backFun, filteredData }) => {
     <Box>
       <TableContainer>
         <Table>
-          <TableHead sx={{ height: 10 }}>
-            <TableRow sx={{ backgroundColor: "#e1f5fe" }}>
+          <TableHead  >
+            <TableRow sx={{ backgroundColor: "#e1f5fe",height:10 }}>
               <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 Private IP
               </TableCell>

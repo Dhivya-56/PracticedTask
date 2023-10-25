@@ -58,8 +58,13 @@ const Samp5 = ({ step, nextFun, backFun, setStep }) => {
   console.log(selector);
   return (
     <Box>
-      <Typography
-        sx={{
+     
+     
+      {isDBselected ? (
+        dbpage.map((web) => (
+          <Box>
+             <Typography
+               sx={{
           fontSize: 18,
           fontWeight: 600,
           textAlign: "center",
@@ -71,9 +76,6 @@ const Samp5 = ({ step, nextFun, backFun, setStep }) => {
       >
         Configure your Database server for LAMA
       </Typography>
-      {isDBselected ? (
-        dbpage.map((web) => (
-          <Box>
             <Box>
               <Typography>{web.ip}</Typography>
             </Box>
@@ -207,7 +209,7 @@ const Samp5 = ({ step, nextFun, backFun, setStep }) => {
         <Typography
           sx={{ textAlign: "center", fontSize: 24, color: "#90a4ae" }}
         >
-          No Configuration Selected On DB Server
+          No Configuration Selected for your DB Server
         </Typography>
       )}
       <React.Fragment>

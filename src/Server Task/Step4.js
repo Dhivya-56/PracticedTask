@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Box, TextField, Typography, Button } from "@mui/material";
-
+import { Box, TextField, Typography, Button ,InputAdornment} from "@mui/material";
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { info } from "../TaskReducer";
@@ -113,6 +113,13 @@ const Samp4 = ({ step, nextFun, backFun, data }) => {
                   )
                 }
                 defaultValue={web.meta?.[checkData1].auth_error.query}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <ErrorOutlineIcon color="black" />
+                    </InputAdornment>
+                  ),
+                }}
               ></TextField>
             </Box>
             <Box
@@ -151,6 +158,13 @@ const Samp4 = ({ step, nextFun, backFun, data }) => {
                 placeholder="select * from table_name Limit 0.10"
                 InputLabelProps={{
                   shrink: true,
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <ErrorOutlineIcon color="black" />
+                    </InputAdornment>
+                  ),
                 }}
                 onChange={(e) =>
                   handleInputChange(

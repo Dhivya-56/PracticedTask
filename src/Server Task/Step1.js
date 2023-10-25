@@ -44,6 +44,7 @@ function IPTable({ checkbox, step, nextFun }) {
           Object.keys(newExchange).forEach((key) => {
             if (newExchange[key] === 0) {
               delete newExchange[key];
+           
             }
           });
 
@@ -95,6 +96,7 @@ function IPTable({ checkbox, step, nextFun }) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   return (
     <Box sx={{ position: "relative", bottom: 15 }}>
       <TableContainer>

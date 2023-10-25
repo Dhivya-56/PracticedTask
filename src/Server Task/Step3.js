@@ -17,14 +17,14 @@ import { useDispatch } from "react-redux";
 import { info } from "../TaskReducer";
 import { useEffect } from "react";
 
-const Samp3 = ({ step, nextFun, backFun }) => {
+const Samp3 = ({ step, nextFun, backFun,filteredData }) => {
   const selector = useSelector((state) => state.Task);
   const dispatch = useDispatch();
   const [lastSelector, setLastSelector] = useState(selector);
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] =useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const select = selector.filter((item) => item.selected_metrics);
-  const [last, setLast] = useState(select);
+
+  const [last, setLast] = useState(filteredData);
   useEffect(() => {
     dispatch(info(lastSelector));
   }, [lastSelector, dispatch]);
@@ -39,7 +39,7 @@ const Samp3 = ({ step, nextFun, backFun }) => {
   };
 
   function handleSubmit() {
-    const newData = select.map((item) => {
+    const newData = last.map((item) => {
       const { selected_metrics, meta } = item;
       return {
         ...item,

@@ -8,11 +8,11 @@ import StepButton from "@mui/material/StepButton";
 
 import { useSelector } from "react-redux";
 
-import IPTable from "./Samp";
-import Samp2 from "./Samp2";
-import Samp3 from "./Samp3";
-import Samp4 from "./Samp4";
-import Samp5 from "./Samp5";
+import IPTable from "./Step1";
+import Samp2 from "./Step2";
+import Samp3 from "./Step3";
+import Samp4 from "./Step4";
+import Samp5 from "./Step5";
 const STEPS = [
   "Setup Exchange",
   "Setup Application",
@@ -160,6 +160,7 @@ const Design = () => {
             <Samp3
               checkbox={Checkbox}
               step={activeStep}
+              filteredData={filter}
               setStep={setActiveStep}
               nextFun={handleNext}
               backFun={handleBack}
