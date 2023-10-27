@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Data from "./Data";
 import { info } from "../TaskReducer";
-function IPTable({ checkbox, step, nextFun }) {
+function IPTable({ checkbox, setStep }) {
   const selector = useSelector((state) => state.Task);
 
   const [ipData, setIpData] = useState(selector);
@@ -44,7 +44,6 @@ function IPTable({ checkbox, step, nextFun }) {
           Object.keys(newExchange).forEach((key) => {
             if (newExchange[key] === 0) {
               delete newExchange[key];
-           
             }
           });
 
@@ -84,7 +83,9 @@ function IPTable({ checkbox, step, nextFun }) {
       });
     });
   };
-
+  function handleNext() {
+    setStep((prevActiveStep) => prevActiveStep + 1);
+  }
   useEffect(() => {
     dispatch(info(ipData));
   }, [ipData]);
@@ -162,7 +163,7 @@ function IPTable({ checkbox, step, nextFun }) {
           <Box sx={{ flex: "1 1 auto" }} />
           <Button
             variant="contained"
-            onClick={nextFun}
+            onClick={handleNext}
             sx={{ mr: 1 }}
             disabled={!checkbox}
           >

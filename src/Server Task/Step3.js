@@ -7,8 +7,7 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  Paper,
-  Checkbox,
+ 
   TableContainer,
   TablePagination,
 } from "@mui/material";
@@ -17,11 +16,19 @@ import { useDispatch } from "react-redux";
 import { info } from "../TaskReducer";
 import { useEffect } from "react";
 
-const Samp3 = ({ step, nextFun, backFun,filteredData }) => {
+const Samp3 = ({
+  step,
+ 
+  filteredData,
+  final,
+ 
+  setStep,
+ 
+}) => {
   const selector = useSelector((state) => state.Task);
   const dispatch = useDispatch();
   const [lastSelector, setLastSelector] = useState(selector);
-  const [page, setPage] =useState(0);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [last, setLast] = useState(filteredData);
@@ -37,8 +44,15 @@ const Samp3 = ({ step, nextFun, backFun,filteredData }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  function handleBack() {
+    const newval = final.length - 1;
+    setStep((prev) => prev - (prev - final[newval] - 1));
+  }
 
   function handleSubmit() {
+    if (final[final.length - 1] === 5) {
+      setStep(7);
+    }
     const newData = last.map((item) => {
       const { selected_metrics, meta } = item;
       return {
@@ -55,7 +69,7 @@ const Samp3 = ({ step, nextFun, backFun,filteredData }) => {
 
     setLastSelector(newData);
   }
-
+ 
   return (
     <Box>
       <TableContainer>
@@ -115,7 +129,7 @@ const Samp3 = ({ step, nextFun, backFun,filteredData }) => {
           <Button
             color="primary"
             disabled={step === 0}
-            onClick={backFun}
+            onClick={handleBack}
             sx={{ fontWeight: 700, mr: 1 }}
           >
             Back

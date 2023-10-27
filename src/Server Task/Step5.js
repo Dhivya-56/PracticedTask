@@ -13,14 +13,20 @@ import {
   InputLabel,
 } from "@mui/material";
 import { useEffect } from "react";
-const Samp5 = ({ step, nextFun, backFun, setStep }) => {
+const Samp5 = ({
+  step,
+ 
+  setStep,
+  final,
+  
+}) => {
   const selector = useSelector((state) => state.Task);
   const [db, setDb] = useState(selector);
   const dispatch = useDispatch();
   const Dbfilter = db?.filter((values) => values?.selected_metrics?.DB);
 
   const [dbpage, setDbpage] = useState(Dbfilter);
-
+  const [stepFinalData, setStepfinaldata] = useState(5);
   const isDBselected = dbpage.length > 0;
   function handleChange(ip, field, value) {
     setDb((data) => {
@@ -52,30 +58,44 @@ const Samp5 = ({ step, nextFun, backFun, setStep }) => {
       });
     });
   }
+  function handleNext() {
+    const val = final.indexOf(stepFinalData);
+    if (val === final.length - 1) {
+      setStep(7);
+    } else {
+      setStep((prev) => prev + (final[val + 1] - final[val]));
+    }
+  }
+  function handleBack() {
+    const val = final.indexOf(stepFinalData);
+    if (val === 0) {
+      setStep(1);
+    } else {
+      setStep((prev) => prev - (final[val] - final[val - 1]));
+    }
+  }
   useEffect(() => {
     dispatch(info(db));
   }, [db, dispatch]);
-  console.log(selector);
+console.log(selector)
   return (
     <Box>
-     
-     
       {isDBselected ? (
         dbpage.map((web) => (
           <Box>
-             <Typography
-               sx={{
-          fontSize: 18,
-          fontWeight: 600,
-          textAlign: "center",
-          position: "relative",
-          bottom: 23,
-          right: 73,
-          fontFamily: "Bahnschrift",
-        }}
-      >
-        Configure your Database server for LAMA
-      </Typography>
+            <Typography
+              sx={{
+                fontSize: 18,
+                fontWeight: 600,
+                textAlign: "center",
+                position: "relative",
+                bottom: 23,
+                right: 73,
+                fontFamily: "Bahnschrift",
+              }}
+            >
+              Configure your Database server for LAMA
+            </Typography>
             <Box>
               <Typography>{web.ip}</Typography>
             </Box>
@@ -120,9 +140,13 @@ const Samp5 = ({ step, nextFun, backFun, setStep }) => {
                   }}
                   sx={{ m: 2, width: 350, position: "relative", top: 9 }}
                   defaultValue={web.meta.db_log.username}
-                  onChange={(e) =>
-                    handleChange(web.ip, "username", e.target.value)
-                  }
+                  onChange={(e) => {
+                    const newValue = e.target.value;
+                    handleChange(web.ip, "username", newValue);
+                    if (newValue === "3306") {
+                      handleChange(web.ip, "type", "MySql");
+                    }
+                  }}
                 ></TextField>
                 <TextField
                   label="Password"
@@ -217,13 +241,13 @@ const Samp5 = ({ step, nextFun, backFun, setStep }) => {
           <Button
             color="primary"
             disabled={step === 0}
-            onClick={backFun}
+            onClick={handleBack}
             sx={{ mr: 1, fontWeight: 700 }}
           >
             Back
           </Button>
 
-          <Button variant="contained" onClick={nextFun} sx={{ mr: 1 }}>
+          <Button variant="contained" onClick={handleNext} sx={{ mr: 1 }}>
             Next
           </Button>
         </Box>

@@ -14,16 +14,25 @@ import {
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { info } from "../TaskReducer";
-import { CheckBox } from "@mui/icons-material";
 
-const Samp2 = ({ step, nextFun, backFun, filteredData }) => {
+
+const Samp2 = ({ step, filteredData, final, setStepping, setStep }) => {
   const selector = useSelector((state) => state.Task);
   const [page, setPage] = useState(0);
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const dispatch = useDispatch();
   const [dat, setDat] = useState(selector);
   const [ipTable, setIpTable] = useState(filteredData);
+
+  function handleNext() {
+    setStep((prevActiveStep) => prevActiveStep + final[0]);
+  }
+
+  function handleBack() {
+    setStep((prevActiveStep) => prevActiveStep - 1);
+  }
 
   useEffect(() => {
     setIpTable(filteredData);
@@ -58,6 +67,78 @@ const Samp2 = ({ step, nextFun, backFun, filteredData }) => {
             }
           });
 
+          if (head === "WEB") {
+            if (newExchange[head]) {
+              setStepping((prevStepping) => ({
+                ...prevStepping,
+                [head]: 1,
+              }));
+            } else {
+              setStepping((prevStepping) => {
+                const updatedStepping = { ...prevStepping };
+
+                delete updatedStepping[head];
+                return updatedStepping;
+              });
+            }
+          } else if (head === "OMS") {
+            if (newExchange[head]) {
+              setStepping((prevStepping) => ({
+                ...prevStepping,
+                [head]: 2,
+              }));
+            } else {
+              setStepping((prevStepping) => {
+                const updatedStepping = { ...prevStepping };
+
+                delete updatedStepping[head];
+                return updatedStepping;
+              });
+            }
+          } else if (head === "RMS") {
+            if (newExchange[head]) {
+              setStepping((prevStepping) => ({
+                ...prevStepping,
+                [head]: 3,
+              }));
+            } else {
+              setStepping((prevStepping) => {
+                const updatedStepping = { ...prevStepping };
+
+                delete updatedStepping[head];
+                return updatedStepping;
+              });
+            }
+          } else if (head === "EXC") {
+            if (newExchange[head]) {
+              setStepping((prevStepping) => ({
+                ...prevStepping,
+                [head]: 4,
+              }));
+            } else {
+              setStepping((prevStepping) => {
+                const updatedStepping = { ...prevStepping };
+
+                delete updatedStepping[head];
+                return updatedStepping;
+              });
+            }
+          } else if (head === "DB") {
+            if (newExchange[head]) {
+              setStepping((prevStepping) => ({
+                ...prevStepping,
+                [head]: 5,
+              }));
+            } else {
+              setStepping((prevStepping) => {
+                const updatedStepping = { ...prevStepping };
+
+                delete updatedStepping[head];
+                return updatedStepping;
+              });
+            }
+          }
+
           return { ...item, selected_metrics: newExchange };
         }
         return item;
@@ -72,8 +153,8 @@ const Samp2 = ({ step, nextFun, backFun, filteredData }) => {
     <Box>
       <TableContainer>
         <Table>
-          <TableHead  >
-            <TableRow sx={{ backgroundColor: "#e1f5fe",height:10 }}>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: "#e1f5fe", height: 10 }}>
               <TableCell sx={{ fontWeight: 600, color: "#2196f3" }}>
                 Private IP
               </TableCell>
@@ -138,7 +219,7 @@ const Samp2 = ({ step, nextFun, backFun, filteredData }) => {
           <Button
             color="primary"
             disabled={step === 0}
-            onClick={backFun}
+            onClick={handleBack}
             sx={{ fontWeight: 700, mr: 1 }}
           >
             Back
@@ -146,7 +227,7 @@ const Samp2 = ({ step, nextFun, backFun, filteredData }) => {
 
           <Button
             variant="contained"
-            onClick={nextFun}
+            onClick={handleNext}
             sx={{ mr: 1 }}
             disabled={!checkbox}
           >

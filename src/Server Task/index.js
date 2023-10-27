@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Data from "./Data";
-import { Box, Button, Typography } from "@mui/material";
+import { useMediaQuery, Grid, Box, Button, Typography } from "@mui/material";
 import Stepper from "@mui/material/Stepper";
 import { StepLabel } from "@mui/material";
 import Step from "@mui/material/Step";
@@ -21,10 +21,17 @@ const STEPS = [
   "RMS Servers",
   "Exchange Connectivity",
   "Database Servers",
+
   "Summary",
 ];
-
+const MOVE = [];
 const Design = () => {
+  const [stepping, setStepping] = useState(MOVE);
+
+  const stepper = Object.values(stepping);
+
+  const stepData = stepper.sort((a, b) => a - b);
+
   const selector = useSelector((state) => state.Task);
 
   const [activeStep, setActiveStep] = useState(0);
@@ -37,14 +44,6 @@ const Design = () => {
       item.exchange &&
       Object.keys(item.exchange)?.some((value) => value !== undefined)
   );
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
 
   const handleStep = (step) => () => {
     setActiveStep(step);
@@ -77,22 +76,16 @@ const Design = () => {
       >
         {activeStep === 0 && (
           <Box>
-            <IPTable
-              checkbox={Checkbox}
-              step={activeStep}
-              setStep={setActiveStep}
-              nextFun={handleNext}
-            />
+            <IPTable checkbox={Checkbox} setStep={setActiveStep} />
           </Box>
         )}
         {activeStep === 1 && (
           <Box>
             <Samp2
-              checkbox={Checkbox}
               step={activeStep}
+              final={stepData}
+              setStepping={setStepping}
               setStep={setActiveStep}
-              nextFun={handleNext}
-              backFun={handleBack}
               filteredData={filter}
             />
           </Box>
@@ -100,11 +93,9 @@ const Design = () => {
         {activeStep === 2 && (
           <Box>
             <Samp4
-              checkbox={Checkbox}
               step={activeStep}
+              final={stepData}
               setStep={setActiveStep}
-              nextFun={handleNext}
-              backFun={handleBack}
               data={"WEB"}
             />
           </Box>
@@ -112,11 +103,9 @@ const Design = () => {
         {activeStep === 3 && (
           <Box>
             <Samp4
-              checkbox={Checkbox}
+              final={stepData}
               step={activeStep}
               setStep={setActiveStep}
-              nextFun={handleNext}
-              backFun={handleBack}
               data={"OMS"}
             />
           </Box>
@@ -124,11 +113,9 @@ const Design = () => {
         {activeStep === 4 && (
           <Box>
             <Samp4
-              checkbox={Checkbox}
               step={activeStep}
+              final={stepData}
               setStep={setActiveStep}
-              nextFun={handleNext}
-              backFun={handleBack}
               data={"RMS"}
             />
           </Box>
@@ -138,32 +125,26 @@ const Design = () => {
             <Samp4
               checkbox={Checkbox}
               step={activeStep}
+              stepp={stepping}
+              final={stepData}
+              setStepping={setStepping}
               setStep={setActiveStep}
-              nextFun={handleNext}
-              backFun={handleBack}
               data={"EXC"}
             />
           </Box>
         )}
         {activeStep === 6 && (
           <Box>
-            <Samp5
-              step={activeStep}
-              setStep={setActiveStep}
-              nextFun={handleNext}
-              backFun={handleBack}
-            />
+            <Samp5 step={activeStep} final={stepData} setStep={setActiveStep} />
           </Box>
         )}
         {activeStep === 7 && (
           <Box>
             <Samp3
-              checkbox={Checkbox}
               step={activeStep}
+              final={stepData}
               filteredData={filter}
               setStep={setActiveStep}
-              nextFun={handleNext}
-              backFun={handleBack}
             />
           </Box>
         )}
