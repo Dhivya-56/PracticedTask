@@ -15,10 +15,9 @@ import {
 import { useEffect } from "react";
 const Samp5 = ({
   step,
- 
+
   setStep,
   final,
-  
 }) => {
   const selector = useSelector((state) => state.Task);
   const [db, setDb] = useState(selector);
@@ -77,7 +76,7 @@ const Samp5 = ({
   useEffect(() => {
     dispatch(info(db));
   }, [db, dispatch]);
-console.log(selector)
+  console.log(selector);
   return (
     <Box>
       {isDBselected ? (

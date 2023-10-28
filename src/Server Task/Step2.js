@@ -15,7 +15,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { info } from "../TaskReducer";
 
-
 const Samp2 = ({ step, filteredData, final, setStepping, setStep }) => {
   const selector = useSelector((state) => state.Task);
   const [page, setPage] = useState(0);

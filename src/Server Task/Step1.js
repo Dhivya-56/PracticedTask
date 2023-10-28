@@ -53,14 +53,17 @@ function IPTable({ checkbox, setStep }) {
             exchange: newExchange,
             meta: {
               web_log: {
+                log_type: "",
                 auth_error: {},
                 trade_error: {},
               },
               oms_log: {
+                log_type: "",
                 auth_error: {},
                 trade_error: {},
               },
               rms_log: {
+                log_type: "",
                 auth_error: {},
                 trade_error: {},
               },
@@ -73,6 +76,7 @@ function IPTable({ checkbox, setStep }) {
                 instance_type: "",
               },
               ex_adptr_log: {
+                log_type: "",
                 auth_error: {},
                 trade_error: {},
               },

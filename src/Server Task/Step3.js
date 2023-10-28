@@ -7,7 +7,6 @@ import {
   TableHead,
   TableRow,
   TableCell,
- 
   TableContainer,
   TablePagination,
 } from "@mui/material";
@@ -18,12 +17,11 @@ import { useEffect } from "react";
 
 const Samp3 = ({
   step,
- 
+
   filteredData,
   final,
- 
+
   setStep,
- 
 }) => {
   const selector = useSelector((state) => state.Task);
   const dispatch = useDispatch();
@@ -48,7 +46,7 @@ const Samp3 = ({
     const newval = final.length - 1;
     setStep((prev) => prev - (prev - final[newval] - 1));
   }
-
+  console.log(selector);
   function handleSubmit() {
     if (final[final.length - 1] === 5) {
       setStep(7);
@@ -69,7 +67,7 @@ const Samp3 = ({
 
     setLastSelector(newData);
   }
- 
+
   return (
     <Box>
       <TableContainer>
