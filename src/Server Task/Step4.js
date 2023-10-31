@@ -29,7 +29,6 @@ const Samp4 = ({
   file1,
   setFile1,
 }) => {
-
   const selector = useSelector((state) => state.Task);
   const [final1, setFinal] = useState(selector);
   const dispatch = useDispatch();
@@ -38,7 +37,6 @@ const Samp4 = ({
   const [stepFinalData, setStepfinaldata] = useState(null);
 
   const [ipWeb, setIpWeb] = useState(Web);
- 
 
   const [radio, setRadio] = useState(selector);
 
@@ -90,9 +88,8 @@ const Samp4 = ({
       ? Web[0].meta?.[checkData1].log_type
       : "none"
   );
-  // const[selectedRadio, setSelectedRadio]=useState("")
-  console.log(checkData1)
-  console.log(selectedRadio);
+
+
   function handleInputChange(ip, auth, field, value) {
     setFinal((prevDat) => {
       return prevDat.map((item) => {
@@ -112,26 +109,13 @@ const Samp4 = ({
               },
             };
           }
-          // else if(selectedRadio==='file'){
-          //   return {
-          //     ...item,
-          //     meta: {
-          //       ...item?.meta,
-          //       [checkData1]: {
-          //         ...item?.meta?.[checkData1],
-          //         [auth]: {},
-          //       },
-          //     },
-          //   };
-          // }
         }
         return item;
       });
     });
   }
-  
+
   function handleNext() {
-  
     const val = final.indexOf(stepFinalData);
     if (val === final.length - 1) {
       setStep(7);
@@ -139,7 +123,7 @@ const Samp4 = ({
       setStep((prev) => prev + (final[val + 1] - final[val]));
     }
   }
- 
+
   function handleInput1Change(ip, type, field1, value) {
     setFinal((prevDat) => {
       return prevDat.map((item) => {
@@ -159,19 +143,6 @@ const Samp4 = ({
               },
             };
           }
-          // if(selectedRadio==='none') {
-          // console.log("else part")
-          //   return {
-          //     ...item,
-          //     meta: {
-          //       ...item?.meta,
-          //       [checkData1]: {
-          //         // ...item?.meta?.[checkData1],
-          //         [type]:{},
-          //       },
-          //     },
-          //   };
-          // }
         }
         return item;
       });
@@ -179,7 +150,6 @@ const Samp4 = ({
   }
   function handleRadioChange(event) {
     setSelectedRadio(event.target.value);
-   
   }
   useEffect(() => {
     const update = final1.map((item) => {
@@ -199,7 +169,6 @@ const Samp4 = ({
     dispatch(info(update));
   }, [selectedRadio]);
 
-  console.log(selector);
 
   useEffect(() => {
     dispatch(info(final1));
@@ -213,7 +182,7 @@ const Samp4 = ({
           row
           aria-labelledby="demo-row-radio-buttons-group-label"
           name="row-radio-buttons-group"
-          sx={{ position: "relative", left: 310, bottom: 10 }}
+          sx={{ position: "relative", left: 310, bottom: 10, color: "#9e9e9e" }}
         >
           <FormControlLabel
             value="database"
@@ -254,9 +223,25 @@ const Samp4 = ({
             >
               Database Input
             </Typography>
-            <Typography sx={{mb:2,mt:0,color:'grey',width:900,fontFamily: "Calibri",fontWeight:550} }>This selection is valid if the application related data stored in the database.Required working database query along with seprarate read-only user to collect the data in the following sequence 'timestamp,server IP,server name,log ID,log level,erro,description',and recommended to use query-limit to avoid the long execution,Per execution of the data collector will process up to 1000 lines from the query output.</Typography>
+            <Typography
+              sx={{
+                mb: 2,
+                mt: 0,
+                color: "#9e9e9e",
+                width: 900,
+                fontFamily: "Calibri",
+                fontWeight: 550,
+              }}
+            >
+              This selection is valid if the application related data stored in
+              the database.Required working database query along with seprarate
+              read-only user to collect the data in the following sequence
+              'timestamp,server IP,server name,log ID,log
+              level,erro,description',and recommended to use query-limit to
+              avoid the long execution,Per execution of the data collector will
+              process up to 1000 lines from the query output.
+            </Typography>
             <Box sx={{ display: "flex", gap: 0.5 }}>
-             
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <TextField
                   label="Host"
@@ -461,87 +446,111 @@ const Samp4 = ({
       </Box>
       {ipWeb.map((item1) => (
         <Box>
-         
           {selectedRadio === "file" && (
             <Box>
-             <Typography   variant="h6"
-              sx={{
-                fontWeight: 600,
-                fontFamily: "Calibri",
-                position: "relative",
-                left: 365,
-                bottom: 10,
-              }}>File Based Input</Typography>
-             <Typography sx={{mb:2,mt:0,color:'grey',width:900,fontFamily: "Calibri",fontWeight:550} }>Locate the exact file path from the target server in the following sequence:"timestamp,server IP,server name,log ID,log level,error,description".Per execution of the data collector will read up to 1000 lines from the log file and different file path per data metrics is not allowed </Typography>
-            <Box>
-              <Typography sx={{ position: "relative", left: 100 }}>
-                {item1.ip}
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 600,
+                  fontFamily: "Calibri",
+                  position: "relative",
+                  left: 365,
+                  bottom: 10,
+                }}
+              >
+                File Based Input
+              </Typography>
+              <Typography
+                sx={{
+                  mb: 2,
+                  mt: 0,
+                  color: "#9e9e9e",
+                  width: 900,
+                  fontFamily: "Calibri",
+                  fontWeight: 550,
+                }}
+              >
+                Locate the exact file path from the target server in the
+                following sequence:"timestamp,server IP,server name,log ID,log
+                level,error,description".Per execution of the data collector
+                will read up to 1000 lines from the log file and different file
+                path per data metrics is not allowed{" "}
               </Typography>
               <Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    position: "relative",
-                    left: 70,
-                  }}
-                >
-                  <Typography sx={{ position: "relative", top: 20, right: 60 }}>
-                    Auth Error
-                  </Typography>
-                  <TextField
-                    label="File Path"
-                    sx={{ m: 2, width: 410, position: "relative", right: 30 }}
-                    name="dbname"
-                    size="small"
-                    onChange={(e) =>
-                      handleInput1Change(
-                        item1.ip,
-                        "auth_error",
-                        "File_path",
-                        e.target.value
-                      )
-                    }
-                    InputLabelProps={{
-                      shrink: true,
+                <Typography sx={{ position: "relative", left: 100 }}>
+                  {item1.ip}
+                </Typography>
+                <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      position: "relative",
+                      left: 70,
                     }}
-                    defaultValue={item1.meta?.[checkData1].auth_error.File_path}
-                  ></TextField>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    position: "relative",
-                    left: 70,
-                  }}
-                >
-                  <Typography sx={{ position: "relative", top: 20, right: 60 }}>
-                    Trade Error
-                  </Typography>
-                  <TextField
-                    label="File Path"
-                    sx={{ m: 2, width: 410, position: "relative", right: 34 }}
-                    name="dbname"
-                    size="small"
-                    onChange={(e) =>
-                      handleInput1Change(
-                        item1.ip,
-                        "trade_error",
-                        "File_path",
-                        e.target.value
-                      )
-                    }
-                    InputLabelProps={{
-                      shrink: true,
+                  >
+                    <Typography
+                      sx={{ position: "relative", top: 20, right: 60 }}
+                    >
+                      Auth Error
+                    </Typography>
+                    <TextField
+                      label="File Path"
+                      sx={{ m: 2, width: 410, position: "relative", right: 30 }}
+                      name="dbname"
+                      size="small"
+                      onChange={(e) =>
+                        handleInput1Change(
+                          item1.ip,
+                          "auth_error",
+                          "File_path",
+                          e.target.value
+                        )
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      defaultValue={
+                        item1.meta?.[checkData1].auth_error.File_path
+                      }
+                    ></TextField>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      position: "relative",
+                      left: 70,
                     }}
-                    defaultValue={
-                      item1.meta?.[checkData1].trade_error.File_path
-                    }
-                  ></TextField>
+                  >
+                    <Typography
+                      sx={{ position: "relative", top: 20, right: 60 }}
+                    >
+                      Trade Error
+                    </Typography>
+                    <TextField
+                      label="File Path"
+                      sx={{ m: 2, width: 410, position: "relative", right: 34 }}
+                      name="dbname"
+                      size="small"
+                      onChange={(e) =>
+                        handleInput1Change(
+                          item1.ip,
+                          "trade_error",
+                          "File_path",
+                          e.target.value
+                        )
+                      }
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      defaultValue={
+                        item1.meta?.[checkData1].trade_error.File_path
+                      }
+                    ></TextField>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
             </Box>
           )}
         </Box>

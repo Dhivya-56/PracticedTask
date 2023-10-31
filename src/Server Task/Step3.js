@@ -23,7 +23,6 @@ const Samp3 = ({
 
   setStep,
 }) => {
-  
   const selector = useSelector((state) => state.Task);
   const dispatch = useDispatch();
   const [lastSelector, setLastSelector] = useState(selector);
@@ -105,153 +104,150 @@ const Samp3 = ({
                 trade_error: {},
               },
 
-          
-          oms_log: selected_metrics.oms 
-          ? meta.oms_log.log_type==="database"
-          ?{
-            log_type: "database",
-            auth_error: {
-              dbname: meta.oms_log.auth_error.dbname
-                ? meta.oms_log.auth_error.dbname
-                : "",
-              query: meta.oms_log.auth_error.query
-                ? meta.oms_log.auth_error.query
-                : "",
-            },
-            trade_error: {
-              dbname: meta.oms_log.trade_error.dbname
-                ? meta.oms_log.trade_error.dbname
-                : "",
-              query: meta.oms_log.trade_error.query
-                ? meta.oms_log.trade_error.query
-                : "",
-            },
-          }
-        : meta.oms_log.log_type === "file"
-        ? {
-            log_type: "file",
-            auth_error: {
-              File_path: meta.oms_log.auth_error.File_path
-                ? meta.oms_log.auth_error.File_path
-                : "",
-            },
-            trade_error: {
-              File_path: meta.oms_log.trade_error.File_path
-                ? meta.oms_log.trade_error.File_path
-                : "",
-            },
-          }
-        : {
-            log_type: "none",
-            auth_error: {},
-            trade_error: {},
-          }
-      : {
-          log_type: "",
-          auth_error: {},
-          trade_error: {},
-        },
-        rms_log: selected_metrics.rms 
-          ? meta.rms_log.log_type==="database"
-          ?{
-            log_type: "database",
-            auth_error: {
-              dbname: meta.rms_log.auth_error.dbname
-                ? meta.rms_log.auth_error.dbname
-                : "",
-              query: meta.rms_log.auth_error.query
-                ? meta.rms_log.auth_error.query
-                : "",
-            },
-            trade_error: {
-              dbname: meta.rms_log.trade_error.dbname
-                ? meta.rms_log.trade_error.dbname
-                : "",
-              query: meta.rms_log.trade_error.query
-                ? meta.rms_log.trade_error.query
-                : "",
-            },
-          }
-        : meta.rms_log.log_type === "file"
-        ? {
-            log_type: "file",
-            auth_error: {
-              File_path: meta.rms_log.auth_error.File_path
-                ? meta.rms_log.auth_error.File_path
-                : "",
-            },
-            trade_error: {
-              File_path: meta.rms_log.trade_error.File_path
-                ? meta.rms_log.trade_error.File_path
-                : "",
-            },
-          }
-        : {
-            log_type: "none",
-            auth_error: {},
-            trade_error: {},
-          }
-      : {
-          log_type: "",
-          auth_error: {},
-          trade_error: {},
-        },
-        ex_adptr_log: selected_metrics.ex_adptr
-        ? meta.ex_adptr_log.log_type==="database"
-        ?{
-          log_type: "database",
-          auth_error: {
-            dbname: meta.ex_adptr_log.auth_error.dbname
-              ? meta.ex_adptr_log.auth_error.dbname
-              : "",
-            query: meta.ex_adptr_log.auth_error.query
-              ? meta.ex_adptr_log.auth_error.query
-              : "",
-          },
-          trade_error: {
-            dbname: meta.ex_adptr_log.trade_error.dbname
-              ? meta.ex_adptr_log.trade_error.dbname
-              : "",
-            query: meta.ex_adptr_log.trade_error.query
-              ? meta.ex_adptr_log.trade_error.query
-              : "",
-          },
-        }
-      : meta.ex_adptr_log.log_type === "file"
-      ? {
-          log_type: "file",
-          auth_error: {
-            File_path: meta.ex_adptr_log.auth_error.File_path
-              ? meta.ex_adptr_log.auth_error.File_path
-              : "",
-          },
-          trade_error: {
-            File_path: meta.ex_adptr_log.trade_error.File_path
-              ? meta.ex_adptr_log.trade_error.File_path
-              : "",
-          },
-        }
-      : {
-          log_type: "none",
-          auth_error: {},
-          trade_error: {},
-        }
-    : {
-        log_type: "",
-        auth_error: {},
-        trade_error: {},
-      },
+          oms_log: selected_metrics.oms
+            ? meta.oms_log.log_type === "database"
+              ? {
+                  log_type: "database",
+                  auth_error: {
+                    dbname: meta.oms_log.auth_error.dbname
+                      ? meta.oms_log.auth_error.dbname
+                      : "",
+                    query: meta.oms_log.auth_error.query
+                      ? meta.oms_log.auth_error.query
+                      : "",
+                  },
+                  trade_error: {
+                    dbname: meta.oms_log.trade_error.dbname
+                      ? meta.oms_log.trade_error.dbname
+                      : "",
+                    query: meta.oms_log.trade_error.query
+                      ? meta.oms_log.trade_error.query
+                      : "",
+                  },
+                }
+              : meta.oms_log.log_type === "file"
+              ? {
+                  log_type: "file",
+                  auth_error: {
+                    File_path: meta.oms_log.auth_error.File_path
+                      ? meta.oms_log.auth_error.File_path
+                      : "",
+                  },
+                  trade_error: {
+                    File_path: meta.oms_log.trade_error.File_path
+                      ? meta.oms_log.trade_error.File_path
+                      : "",
+                  },
+                }
+              : {
+                  log_type: "none",
+                  auth_error: {},
+                  trade_error: {},
+                }
+            : {
+                log_type: "",
+                auth_error: {},
+                trade_error: {},
+              },
+          rms_log: selected_metrics.rms
+            ? meta.rms_log.log_type === "database"
+              ? {
+                  log_type: "database",
+                  auth_error: {
+                    dbname: meta.rms_log.auth_error.dbname
+                      ? meta.rms_log.auth_error.dbname
+                      : "",
+                    query: meta.rms_log.auth_error.query
+                      ? meta.rms_log.auth_error.query
+                      : "",
+                  },
+                  trade_error: {
+                    dbname: meta.rms_log.trade_error.dbname
+                      ? meta.rms_log.trade_error.dbname
+                      : "",
+                    query: meta.rms_log.trade_error.query
+                      ? meta.rms_log.trade_error.query
+                      : "",
+                  },
+                }
+              : meta.rms_log.log_type === "file"
+              ? {
+                  log_type: "file",
+                  auth_error: {
+                    File_path: meta.rms_log.auth_error.File_path
+                      ? meta.rms_log.auth_error.File_path
+                      : "",
+                  },
+                  trade_error: {
+                    File_path: meta.rms_log.trade_error.File_path
+                      ? meta.rms_log.trade_error.File_path
+                      : "",
+                  },
+                }
+              : {
+                  log_type: "none",
+                  auth_error: {},
+                  trade_error: {},
+                }
+            : {
+                log_type: "",
+                auth_error: {},
+                trade_error: {},
+              },
+          ex_adptr_log: selected_metrics.ex_adptr
+            ? meta.ex_adptr_log.log_type === "database"
+              ? {
+                  log_type: "database",
+                  auth_error: {
+                    dbname: meta.ex_adptr_log.auth_error.dbname
+                      ? meta.ex_adptr_log.auth_error.dbname
+                      : "",
+                    query: meta.ex_adptr_log.auth_error.query
+                      ? meta.ex_adptr_log.auth_error.query
+                      : "",
+                  },
+                  trade_error: {
+                    dbname: meta.ex_adptr_log.trade_error.dbname
+                      ? meta.ex_adptr_log.trade_error.dbname
+                      : "",
+                    query: meta.ex_adptr_log.trade_error.query
+                      ? meta.ex_adptr_log.trade_error.query
+                      : "",
+                  },
+                }
+              : meta.ex_adptr_log.log_type === "file"
+              ? {
+                  log_type: "file",
+                  auth_error: {
+                    File_path: meta.ex_adptr_log.auth_error.File_path
+                      ? meta.ex_adptr_log.auth_error.File_path
+                      : "",
+                  },
+                  trade_error: {
+                    File_path: meta.ex_adptr_log.trade_error.File_path
+                      ? meta.ex_adptr_log.trade_error.File_path
+                      : "",
+                  },
+                }
+              : {
+                  log_type: "none",
+                  auth_error: {},
+                  trade_error: {},
+                }
+            : {
+                log_type: "",
+                auth_error: {},
+                trade_error: {},
+              },
 
-          
           db_log: selected_metrics.DB ? meta.db_log : {},
-         
         },
       };
     });
 
     setLastSelector(newData);
   }
- 
+
   return (
     <Box>
       <TableContainer>

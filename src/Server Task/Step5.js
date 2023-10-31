@@ -76,7 +76,7 @@ const Samp5 = ({
   useEffect(() => {
     dispatch(info(db));
   }, [db, dispatch]);
-  console.log(selector);
+
   return (
     <Box>
       {isDBselected ? (

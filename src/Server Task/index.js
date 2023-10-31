@@ -28,8 +28,8 @@ const STEPS = [
 const MOVE = [];
 const Design = () => {
   const [stepping, setStepping] = useState(MOVE);
-const[database,setDatabase]=useState()
-const[file,setFile]=useState()
+  const [database, setDatabase] = useState();
+  const [file, setFile] = useState();
   const stepper = Object.values(stepping);
 
   const stepData = stepper.sort((a, b) => a - b);
@@ -50,10 +50,10 @@ const[file,setFile]=useState()
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
-useEffect(()=>{
- setDatabase(selector) 
- setFile(selector)
-},[selector])
+  useEffect(() => {
+    setDatabase(selector);
+    setFile(selector);
+  }, [selector]);
   return (
     <Box sx={{ width: 1000, m: "auto", position: "relative", top: 10 }}>
       <Stepper
