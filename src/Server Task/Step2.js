@@ -66,7 +66,7 @@ const Samp2 = ({ step, filteredData, final, setStepping, setStep }) => {
             }
           });
 
-          if (head === "WEB") {
+          if (head === "web") {
             if (newExchange[head]) {
               setStepping((prevStepping) => ({
                 ...prevStepping,
@@ -80,7 +80,7 @@ const Samp2 = ({ step, filteredData, final, setStepping, setStep }) => {
                 return updatedStepping;
               });
             }
-          } else if (head === "OMS") {
+          } else if (head === "oms") {
             if (newExchange[head]) {
               setStepping((prevStepping) => ({
                 ...prevStepping,
@@ -94,7 +94,7 @@ const Samp2 = ({ step, filteredData, final, setStepping, setStep }) => {
                 return updatedStepping;
               });
             }
-          } else if (head === "RMS") {
+          } else if (head === "rms") {
             if (newExchange[head]) {
               setStepping((prevStepping) => ({
                 ...prevStepping,
@@ -108,7 +108,7 @@ const Samp2 = ({ step, filteredData, final, setStepping, setStep }) => {
                 return updatedStepping;
               });
             }
-          } else if (head === "EXC") {
+          } else if (head === "ex_adptr") {
             if (newExchange[head]) {
               setStepping((prevStepping) => ({
                 ...prevStepping,
@@ -122,7 +122,7 @@ const Samp2 = ({ step, filteredData, final, setStepping, setStep }) => {
                 return updatedStepping;
               });
             }
-          } else if (head === "DB") {
+          } else if (head === "db") {
             if (newExchange[head]) {
               setStepping((prevStepping) => ({
                 ...prevStepping,
@@ -189,7 +189,7 @@ const Samp2 = ({ step, filteredData, final, setStepping, setStep }) => {
                   key={item.ip}
                 >
                   <TableCell>{item.ip}</TableCell>
-                  {["WEB", "OMS", "RMS", "DB", "EXC"].map((head) => (
+                  {["web", "oms", "rms", "db", "ex_adptr"].map((head) => (
                     <TableCell key={head} sx={{ p: 1 }}>
                       <Checkbox
                         checked={

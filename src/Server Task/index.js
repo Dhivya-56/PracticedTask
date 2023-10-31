@@ -13,6 +13,7 @@ import Samp2 from "./Step2";
 import Samp3 from "./Step3";
 import Samp4 from "./Step4";
 import Samp5 from "./Step5";
+import { useEffect } from "react";
 const STEPS = [
   "Setup Exchange",
   "Setup Application",
@@ -27,7 +28,8 @@ const STEPS = [
 const MOVE = [];
 const Design = () => {
   const [stepping, setStepping] = useState(MOVE);
-
+const[database,setDatabase]=useState()
+const[file,setFile]=useState()
   const stepper = Object.values(stepping);
 
   const stepData = stepper.sort((a, b) => a - b);
@@ -48,7 +50,10 @@ const Design = () => {
   const handleStep = (step) => () => {
     setActiveStep(step);
   };
-
+useEffect(()=>{
+ setDatabase(selector) 
+ setFile(selector)
+},[selector])
   return (
     <Box sx={{ width: 1000, m: "auto", position: "relative", top: 10 }}>
       <Stepper
@@ -94,9 +99,13 @@ const Design = () => {
           <Box>
             <Samp4
               step={activeStep}
+              database1={database}
+              setDatabase1={setDatabase}
+              file1={file}
+              setFile1={setFile}
               final={stepData}
               setStep={setActiveStep}
-              data={"WEB"}
+              data={"web"}
             />
           </Box>
         )}
@@ -104,9 +113,13 @@ const Design = () => {
           <Box>
             <Samp4
               final={stepData}
+              database1={database}
+              setDatabase1={setDatabase}
+              file1={file}
+              setFile1={setFile}
               step={activeStep}
               setStep={setActiveStep}
-              data={"OMS"}
+              data={"oms"}
             />
           </Box>
         )}
@@ -114,9 +127,13 @@ const Design = () => {
           <Box>
             <Samp4
               step={activeStep}
+              database1={database}
+              setDatabase1={setDatabase}
+              file1={file}
+              setFile1={setFile}
               final={stepData}
               setStep={setActiveStep}
-              data={"RMS"}
+              data={"rms"}
             />
           </Box>
         )}
@@ -125,11 +142,15 @@ const Design = () => {
             <Samp4
               checkbox={Checkbox}
               step={activeStep}
+              database1={database}
+              setDatabase1={setDatabase}
+              file1={file}
+              setFile1={setFile}
               stepp={stepping}
               final={stepData}
               setStepping={setStepping}
               setStep={setActiveStep}
-              data={"EXC"}
+              data={"ex_adptr"}
             />
           </Box>
         )}
